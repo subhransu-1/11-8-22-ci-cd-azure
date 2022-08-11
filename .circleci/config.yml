@@ -1,0 +1,17 @@
+version: 2.1 # Use version 2.1 config to get access to orbs, pipelines
+
+orbs:
+    azure-acr: circleci/azure-acr@0.2.1 # Use the Azure ACR orb in your config
+
+workflows:
+    build-deploy:
+    jobs:
+        - azure/build-and-push-image:
+            dockerfile: Dockerfile # defaults to `Dockerfile`
+            path: /home/azureuser # Defaults to working directory
+            login-server-name: circleciry.azure.io
+            registry-name: circleciry
+            repo: https://portal.azure.com/#@thinkartha.com/resource/subscriptions/41cf8417-c071-4950-b2da-84bb5e491a39/resourcegroups/artha/providers/Microsoft.ContainerRegistry/registries/circleciry/overview
+            filters:
+            branches:
+                only: master # Only deploys when the commit is on the Main branch
